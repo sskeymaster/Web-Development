@@ -1,0 +1,124 @@
+.my_name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #de4e67;
+    height: 50px;
+}
+
+.my_name h1 {
+    color: #210909;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background-color: #c52d42;
+    height: 30px;
+}
+
+a {
+    color: #faeeee;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ffd9d9;
+    text-decoration: underline;
+}
+
+button {
+    width: 700px;
+    height: 80px;
+    background-color: #de4e67;
+    color: #faeeee;
+    border-color: #c52d42;
+    border-radius: 40px;
+    font-size: 20px;
+}
+
+button:hover {
+    background-color: #c52d42;
+    color: #210909;
+}
+
+.button {
+    display: flex; /* потом none */
+    justify-content: center;
+    margin-top: 300px;
+    animation: float 3s ease-in-out infinite;
+}
+
+.objects_in_a_row {
+    display: none; /* потом flex */
+    justify-content: center;
+    gap: 70px;
+    margin-top: 130px;
+}
+
+article {
+    width: 300px;
+    height: 300px;
+    margin-top: 100px;
+    border-radius: 10%;
+    background-color: #c52d42;
+    overflow: auto;
+    padding: 0 15px;
+}
+
+.text {
+    color: #ffebeb;
+    line-height: 1.4;
+}
+
+article h2 {
+    color: #faeeee;
+    margin: 15px 0 5px 0;
+}
+
+header {
+    text-align: center;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #210909;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(10px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(10px);
+    }
+}
+
+.dark_enchantress {
+    border-radius: 20%;
+    animation: float 3s ease-in-out infinite;
+}
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #de4e67;
+    border-top: 30px solid #c52d42;
+}
+
+.note {
+    color: #210909;
+}
