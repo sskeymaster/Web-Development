@@ -1,0 +1,182 @@
+body {
+    font-family: "Roboto Flex", sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 144px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.link {
+    color: grey;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.line {
+    height: 1px;
+    width: 940px;
+    display: flex;
+    margin: auto;
+    
+    background-color: black;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 300px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.name {
+    font-size: 38px;
+    line-height: 1.5;
+}
+
+.prof {
+    font-size: 18px;
+    margin-top: 55px;
+}
+
+.lang {
+    transform: rotate(-90deg);
+    margin-top: 30px;
+    margin-left: 40px;
+    margin-right: -30px;
+}
+
+.ru {
+    color: grey;
+}
+
+.eng {
+    color: grey;
+}
+
+.ru:hover {
+    color: black;
+}
+
+.eng:hover {
+    color: black;
+}
+
+.photo1 {
+    display: flex;
+    justify-content: center;
+}
+
+.h2 {
+    font-size: 35px;
+}
+
+.about-me {
+    width: 1900px;
+    height: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: -12px;
+    background-color: #f6f6f6;
+    
+}
+
+.skills {
+    width: 1880px;
+    padding-top: 60px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+}
+
+.skill-images-all {
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+    gap: 15px;
+}
+
+.skill-images {
+    display: flex;
+    gap: 170px;
+}
+
+.skill-images-text {
+    display: flex;
+    text-align: center;
+    margin-left: 5px;
+    gap: 190px;
+    font-weight: bold;
+    color: grey;
+    font-size: 14px;
+}
+
+.skill-images-stars {
+    display: flex;
+    margin-left: -40px;
+    gap: 94px;
+}
+
+.portfolio {
+    width: 1900px;
+    padding-top: 60px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: -12px;
+    background-color: #f6f6f6;
+    gap: 25px;
+}
+
+.portfolio-text {
+    text-decoration: underline;
+    font-size: 18px;
+    padding-bottom: 60px;
+}
+
+footer {
+    width: 1880px;
+    padding-top: 60px;
+    padding-bottom: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button-container {
+    padding-top: 15px;
+}
+
+.button {
+    background-color: #070707;
+    border: none;
+    height: 45px;
+    width: 190px;
+    color: white;
+    border-radius: 30px;
+}
+
+.footer-images {
+    display: flex;
+    padding-top: 70px;
+    padding-bottom: 45px;
+    gap: 60px;
+}
