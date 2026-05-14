@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>викторина</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #ffe4ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            padding: 16px;
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            width: 100%;
+            background: #fff0f5;
+            border-radius: 28px;
+            padding: 24px 20px 28px 20px;
+            border: 1px solid #fbc4d2;
+        }
+
+        .question-text {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom:18px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f9a8bb;
+            color: #8b3c4a;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffeef4;
+            padding: 10px 16px;
+            border-radius: 40px;
+            border: 1px solid #f5b6c8;
+            cursor: pointer;
+            transition: 0.1s linear;
+        }
+
+       .option:hover {
+            background: #ffe0ea;
+            border-color: #e78eaa;
+       }
+
+       .answer-btn {
+           background: #f3a7bd;
+           border: none;
+           border-radius: 60px;
+           padding: 10px 20px;
+           font-size: 15px;
+           font-weight: 500;
+           color: white;
+           width: 100%;
+           cursor: pointer;
+           transition: 0.1s;
+           margin-top: 4px;
+           margin-bottom: 16px;
+       }
+
+       answer-btn:hover {
+           background: #e77f9f;
+       }
+
+       .progress {
+           background: #fbdce6;
+           border-radius: 40px;
+           padding: 6px 12px;
+           display: inline-block;
+           font-size: 13px;
+           color: #aa556f;
+           margin-bottom: 14px;
+       }
+
+       .result-area {
+           background: #ffe0ea;
+           border-radius: 24px;
+           padding: 14px 16px;
+           text-align: center;
+           margin-top: 12px;
+           font-size: 17px;
+           font-weight: 500;
+           color: #9c415b;
+           border: 1px solid #f9becf;
+       }
+
+       hr {
+           margin: 12px 0;
+           border: 0;
+           height: 1px;
+           background: #fbc4d2;
+       }
+
+       button {
+           font-family: inherit;
+       }
+    </style>
+</head>
+<body>
+    <div class="quiz-container" id="quizApp">
+        <div class="progress" id="progressDisplay">вопрос 1 / 3</div>
+        <div class="question-text" id="questionText">сколько будет 2+2?</div>
+
+        <div id="optionsContainer" class="options-group">
+        </div>
+
+        <button class="answer-btn" id="nextBtn">ответить</button>
+
+        <div id="resultBlock" style="min-height: 70px;"></div>
+    </div>
+
+    <script>
+        const quiz = [
+            {
+                question: "сколько будет 2+2?",
+                options: [2, 3, 4, 5],
+                correct: 4
+            },
+            {
+                question: "столица франции?",
+                options: ["берлин", "париж", "рим"],
+                correct: "париж"
+            },
+            {
+                question: "js это?",
+                options: ["язык", "база данных", "ос"],
+                correct: "язык"
+            }
+        ];
+
+        let currentIndex = 0;
+        let userAnswers = [];
+        let quizFinished = false;
+
+        const progressDisplay = document.getElementById('progressDisplay');
+        const questionTextEl = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const nextBtn = document.getElementById('nextBtn');
+        const resultBlock = document.getElementById('resultBlock');
+
+        function renderCurrentQuestion() {
+            if (quizFinished) return;
+
+            const questionObj = quiz[currentIndex];
+            questionTextEl.textContent = questionObj.question;
+            progressDisplay.textContent = `вопрос ${currentIndex + 1} / ${quiz.length}`;
+
+            let optionsHtml = '';
+            const currentAnswer = userAnswers[currentIndex];
+
+            for (let i = 0; i < questionObj.options.length; i++) {
+                const opt = questionObj.options[i];
+                const stringOpt = String(opt);
+                const checkedAttr = (currentAnswer !== undefined && String(currentAnswer) === stringOpt) ? 'checked' : '';
+                const idVal = `opt_${currentIndex}_${i}`;
+                optionsHtml += `<div class="option" data-value="${stringOpt.replace(/"/g, '&quot;')}">
+                <input type="radio" name="questionRadio" id="${idVal}" value="${stringOpt.replace(/"/g, '&quot;')}" ${checkedAttr}>
+                <label for="${idVal}">${stringOpt}</label></div>`;
+            }
+
+            optionsContainer.innerHTML = optionsHtml;
+
+            const optionDivs = document.querySelectorAll('.option');
+            optionDivs.forEach(div => {
+                const radio = div.querySelector('input[type="radio"]');
+                if (radio) {
+                    div.addEventListener('click', (e) => {
+                        if (e.target.tagName !== 'INPUT') {
+                            radio.checked = true;
+                            const changeEvent = new Event('change', { bubbles: true });
+                            radio.dispatchEvent(changeEvent);
+                        }
+                    });
+                }
+            });
+        }
+
+        function saveAnswer() {
+            if (quizFinished) return false;
+            const selectedRadio = document.querySelector('input[name="questionRadio"]:checked');
+            if (!selectedRadio) {
+                return false;
+            }
+            const selectedValue = selectedRadio.value;
+            userAnswers[currentIndex] = selectedValue;
+            return true;
+        }
+
+        function finishQuizAndShowResult() {
+            quizFinished = true;
+            let correctCount = 0;
+
+            for (let i = 0; i < quiz.length; i++) {
+                const question = quiz[i];
+                const userAns = userAnswers[i];
+                if (userAns !== undefined) {
+                    const correctStr = String(question.correct);
+                    if (userAns === correctStr) {
+                        correctCount++;
+                    }
+                }
+            }
+
+            const total = quiz.length;
+
+            progressDisplay.style.display = 'none';
+            questionTextEl.style.display = 'none';
+            optionsContainer.style.display = 'none';
+            nextBtn.style.display = 'none';
+
+            resultBlock.innerHTML = `
+        <div class="result-area">
+            правильных ответов: ${correctCount} из ${total}
+        </div>
+    `;
+        }
+
+        function resetQuiz() {
+            currentIndex = 0;
+            userAnswers = [];
+            quizFinished = false;
+
+            progressDisplay.style.display = 'inline-block';
+            questionTextEl.style.display = 'block';
+            optionsContainer.style.display = 'flex';
+            nextBtn.style.display = 'block';
+
+            resultBlock.innerHTML = '';
+            renderCurrentQuestion();
+        }
+
+        function onNext() {
+            if (quizFinished) return;
+
+            const saved = saveAnswer();
+            if (!saved) return;
+
+            if (currentIndex + 1 === quiz.length) {
+                finishQuizAndShowResult();
+            } else {
+                currentIndex++;
+                renderCurrentQuestion();
+            }
+        }
+
+        function initQuiz() {
+            resetQuiz();
+            nextBtn.addEventListener('click', onNext);
+        }
+
+        initQuiz();
+    </script>
+</body>
+</html>
